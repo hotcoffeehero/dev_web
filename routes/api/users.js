@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('config')
 const { check, validationResult } = require('express-validator')
 //import the user from the mongoose model
 const User = require('../../models/User')
@@ -43,12 +45,28 @@ router.post(
         avatar,
         password,
       })
+
       // Encrypt the password with bcrypt
       const salt = await bcrypt.genSalt(10)
       user.password = await bcrypt.hash(password, salt)
       await user.save()
-      // Return JSON webtoke
-      res.send('User Registered.')
+
+      //create a payload
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      }
+
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err
+          res.json({ token })
+        }
+      )
     } catch (error) {
       console.error(error.message)
       res.status(500).send('Server Error')

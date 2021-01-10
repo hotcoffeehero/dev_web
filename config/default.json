@@ -1,5 +1,6 @@
 {
-    "mongoURI": "mongodb+srv://hotcoffeehero:mongo1234@proshop.qiu4a.mongodb.net/dev_web?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://hotcoffeehero:mongo1234@proshop.qiu4a.mongodb.net/dev_web?retryWrites=true&w=majority",
+    "jwtSecret": "mytoken"
 }
 
 
