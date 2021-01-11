@@ -28,7 +28,6 @@ router.get('/me', auth, async (req, res) => {
     res.status(500).send('Server Error')
   }
 })
-//=====================================================================
 
 // ====================================================================
 // @route   POST api/profile
@@ -109,5 +108,56 @@ router.post(
 )
 
 // ====================================================================
+// @route   GET api/profile
+// @desc    Get all profiles
+// access   public
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar'])
+    res.json(profiles)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+//=====================================================================
+// @route   GET api/profile/user/:user_id
+// @desc    Get a profile by its id
+// access   public
+router.get('/user/:user_id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate('user', ['name', 'avatar'])
+    res.json(profile)
+    //Check to make sure such a profile exists
+    if (!profile) return res.status(400).json({ msg: 'No such profile' })
+  } catch (error) {
+    console.error(error.message)
+    if (error.kind == ObjectId) {
+      return res.status(400).json({ msg: 'No such profile' })
+    }
+    res.status(500).send('Server Error')
+  }
+})
+
+//=====================================================================
+// @route   DELETE api/profile
+// @desc    delete a user, profile and posts.
+// access   private
+router.delete('/', auth, async (req, res) => {
+  try {
+    //Remove user's posts
+
+    //Remove profile
+    await Profile.findOneAndRemove({ user: req.user.id })
+    await User.findOneAndRemove({ _id: req.user.id })
+    res.json({ message: "It's dust in the wind..." })
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+})
 
 module.exports = router
