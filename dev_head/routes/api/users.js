@@ -78,11 +78,6 @@ router.post(
       console.error(error.message)
       res.status(500).send('Server Error')
     }
-
-    //See if a user exists
-    //Get users gravatar
-    //Encrypt password
-    //Return jsonwebtoken
   }
 )
 
