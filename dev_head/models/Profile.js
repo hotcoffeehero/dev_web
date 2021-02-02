@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { stringify } = require('querystring')
 
 const ProfileSchema = new mongoose.Schema({
-  name: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
