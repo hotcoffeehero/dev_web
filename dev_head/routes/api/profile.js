@@ -4,6 +4,7 @@ const authWare = require('../../middleware/auth')
 const { check, validationResult } = require('express-validator')
 const Profile = require('../../models/Profile')
 const User = require('../../models/User')
+const Post = require('../../')
 
 //ROUTE:    GET api/profile/me
 //DESC:     Get current user's profile
@@ -139,6 +140,7 @@ router.get('/user/:user_id', async (req, res) => {
 //ACCESS:   Private
 router.delete('/', authWare, async (req, res) => {
   try {
+    await Post.deleteMany({ user: req.user.id })
     await Profile.findOneAndRemove({ user: req.user.id })
     await User.findOneAndRemove({ _id: req.user.id })
     res.json({ message: 'User Has Been Deleted.' })
