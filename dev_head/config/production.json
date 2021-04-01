@@ -1,0 +1,5 @@
+{
+    "mongoURI": "mongodb+srv://hotcoffeehero:mongo1234@proshop.qiu4a.mongodb.net/dev_head?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken"
+
+}

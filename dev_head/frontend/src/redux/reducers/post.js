@@ -1,10 +1,10 @@
 import {
   GET_POSTS,
-  GET_POST,
   POST_ERROR,
   UPDATE_LIKES,
   DELETE_POST,
   ADD_POST,
+  GET_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
 } from '../types'
@@ -18,6 +18,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   const { type, payload } = action
+
   switch (type) {
     case GET_POSTS:
       return {
@@ -74,7 +75,6 @@ export default function (state = initialState, action) {
         },
         loading: false,
       }
-
     default:
       return state
   }

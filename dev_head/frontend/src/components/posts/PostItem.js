@@ -25,6 +25,7 @@ const PostItem = ({
       <p class='post-date'>
         Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
       </p>
+
       {showActions && (
         <Fragment>
           <button
